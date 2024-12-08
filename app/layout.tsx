@@ -14,8 +14,8 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "BOM - 部品表管理システム",
-  description: "製造業向けの部品表管理システム",
+  title: "FCR - Fan Community Rewards",
+  description: "ファンコミュニティ報酬システム",
 };
 
 export default function RootLayout({
