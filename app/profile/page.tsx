@@ -1,17 +1,21 @@
 "use client";
 
-import { FCRRankingGrid } from "@/components/ui/fcr-ranking-grid";
 import FlickeringGrid from "@/components/ui/flickering-grid";
 import { Header } from "@/components/ui/header";
-import { StatsGrid } from "@/components/ui/dashboard/stats-grid";
 import { FCRMessageList } from "@/components/ui/fcr-message-list";
 import { FCRTopDonorsGrid } from "@/components/ui/fcr-top-donors-grid";
+import { useRouter } from "next/navigation";
+import { AnimatedShinyTextDemo } from "@/components/ui/animated-shiny-text";
+import { ProfileGrid } from "@/components/ui/profile/profile-grid";
+import { FCRHistoryChart } from "@/components/ui/profile/fcr-history-chart";
 
-export default function Home() {
+export default function ProfilePage() {
+  const router = useRouter();
+
   return (
     <>
       <Header />
-      <main className="relative min-h-screen">
+      <main className="relative min-h-screen pt-12">
         <div className="fixed inset-0 z-0">
           <FlickeringGrid 
             squareSize={4}
@@ -22,13 +26,19 @@ export default function Home() {
           />
         </div>
         
-        <div className="relative z-10 flex min-h-screen flex-col pt-16">
+        <div className="relative z-10 flex min-h-screen flex-col">
           <div className="w-full px-4 md:px-6 lg:px-8">
-            <StatsGrid />
+            <div className="h-12 flex items-center">
+              <AnimatedShinyTextDemo />
+            </div>
           </div>
 
-          <div className="w-full mt-2 px-4 md:px-6 lg:px-8">
-            <FCRRankingGrid />
+          <div className="w-full px-4 md:px-6 lg:px-8">
+            <ProfileGrid />
+          </div>
+
+          <div className="w-full px-4 md:px-6 lg:px-8 mt-4">
+            <FCRHistoryChart />
           </div>
 
           <div className="w-full mt-4 px-4 md:px-6 lg:px-8">
@@ -42,4 +52,4 @@ export default function Home() {
       </main>
     </>
   );
-}
+} 

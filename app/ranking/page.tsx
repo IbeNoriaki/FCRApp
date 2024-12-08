@@ -7,7 +7,7 @@ import { StatsGrid } from "@/components/ui/dashboard/stats-grid";
 import { FCRMessageList } from "@/components/ui/fcr-message-list";
 import { FCRTopDonorsGrid } from "@/components/ui/fcr-top-donors-grid";
 
-export default function Home() {
+export default function RankingPage() {
   return (
     <>
       <Header />
@@ -42,4 +42,4 @@ export default function Home() {
       </main>
     </>
   );
-}
+} 
