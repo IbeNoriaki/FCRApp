@@ -1,58 +1,100 @@
-import { CSSProperties, FC, ReactNode } from "react";
-import { ArrowLeftIcon } from "@radix-ui/react-icons";
+import React, { useState, useEffect, useRef } from "react";
+import { AnimatePresence, motion, Variants } from "framer-motion";
 
 import { cn } from "@/lib/utils";
 
 interface AnimatedShinyTextProps {
-  children: ReactNode;
+  text: string;
   className?: string;
   shimmerWidth?: number;
+  duration?: number;
+  framerProps?: Variants;
+  animateOnLoad?: boolean;
 }
 
-const AnimatedShinyText: FC<AnimatedShinyTextProps> = ({
-  children,
-  className,
-  shimmerWidth = 100,
-}) => {
-  return (
-    <p
-      style={
-        {
-          "--shiny-width": `${shimmerWidth}px`,
-        } as CSSProperties
-      }
-      className={cn(
-        "mx-auto max-w-md text-neutral-600/70 dark:text-neutral-400/70",
-        "animate-shiny-text bg-clip-text bg-no-repeat [background-position:0_0] [background-size:var(--shiny-width)_100%] [transition:background-position_1s_cubic-bezier(.6,.6,0,1)_infinite]",
-        "bg-gradient-to-r from-transparent via-black/80 via-50% to-transparent dark:via-white/80",
-        className,
-      )}
-    >
-      {children}
-    </p>
-  );
-};
+const alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
-export function AnimatedShinyTextDemo() {
+const getRandomInt = (max: number) => Math.floor(Math.random() * max);
+
+export default function HyperText({
+  text,
+  duration = 800,
+  framerProps = {
+    initial: { opacity: 0, y: -10 },
+    animate: { opacity: 1, y: 0 },
+    exit: { opacity: 0, y: 3 },
+  },
+  className,
+  animateOnLoad = true,
+}: AnimatedShinyTextProps) {
+  const [displayText, setDisplayText] = useState(text.split(""));
+  const [trigger, setTrigger] = useState(false);
+  const interations = useRef(0);
+  const isFirstRender = useRef(true);
+
+  const triggerAnimation = () => {
+    interations.current = 0;
+    setTrigger(true);
+  };
+
+  useEffect(() => {
+    const interval = setInterval(
+      () => {
+        if (!animateOnLoad && isFirstRender.current) {
+          clearInterval(interval);
+          isFirstRender.current = false;
+          return;
+        }
+        if (interations.current < text.length) {
+          setDisplayText((t) =>
+            t.map((l, i) =>
+              l === " "
+                ? l
+                : i <= interations.current
+                  ? text[i]
+                  : alphabets[getRandomInt(26)]
+            )
+          );
+          interations.current = interations.current + 0.1;
+        } else {
+          setTrigger(false);
+          clearInterval(interval);
+        }
+      },
+      duration / (text.length * 10)
+    );
+    // Clean up interval on unmount
+    return () => clearInterval(interval);
+  }, [text, duration, trigger, animateOnLoad]);
+
   return (
-    <div className="z-10 flex min-h-64 items-center">
-      <div
-        className={cn(
-          "group flex items-center transition-all ease-in hover:cursor-pointer",
-        )}
-      >
-        <div className="ml-2 flex h-5 w-5 items-center justify-center rounded-full border border-black/70 text-black/70 dark:border-white/70 dark:text-white/70">
-          <ArrowLeftIcon className="size-3 transition-transform duration-300 ease-in-out group-hover:-translate-x-0.5" />
-        </div>
-        <AnimatedShinyText 
-          className="inline-flex items-center justify-center py-1 pl-2 text-black transition ease-out dark:text-white"
-          shimmerWidth={200}
-        >
-          <span>fcr.ryukyu / Username</span>
-        </AnimatedShinyText>
-      </div>
+    <div
+      className="flex scale-100 cursor-default overflow-hidden py-2"
+      onMouseEnter={triggerAnimation}
+    >
+      <AnimatePresence mode="wait">
+        {displayText.map((letter, i) => (
+          <motion.span
+            key={i}
+            className={cn("font-mono", letter === " " ? "w-3" : "", className)}
+            {...framerProps}
+          >
+            {letter}
+          </motion.span>
+        ))}
+      </AnimatePresence>
     </div>
   );
 }
 
-export default AnimatedShinyText;
+interface AnimatedShinyTextDemoProps {
+  text: string;
+}
+
+export function AnimatedShinyTextDemo({ text }: AnimatedShinyTextDemoProps) {
+  return (
+    <div className="z-10 flex min-h-64 items-center">
+      <HyperText text={text} className="your-custom-class" shimmerWidth={100} />
+    </div>
+  );
+}

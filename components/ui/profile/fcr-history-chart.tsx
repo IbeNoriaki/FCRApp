@@ -2,33 +2,25 @@
 
 import * as React from "react";
 import { Bar, BarChart, CartesianGrid, XAxis, ResponsiveContainer } from "recharts";
-import { cn } from "@/lib/utils";
 import { ArrowUpIcon, ArrowDownIcon } from "@radix-ui/react-icons";
 
-interface FCRData {
-  month: string;
-  received: number;
-  sent: number;
+interface FCRHistoryChartProps {
+  data: {
+    month: string;
+    received: number;
+    sent: number;
+  }[];
 }
 
-// 直近6ヶ月のデータを生成
-const fcrData: FCRData[] = Array.from({ length: 6 }, (_, i) => {
-  const date = new Date();
-  date.setMonth(date.getMonth() - i);
-  return {
-    month: date.toLocaleDateString('en-US', { month: 'long' }),
-    received: Math.floor(Math.random() * 50000) + 10000,
-    sent: Math.floor(Math.random() * 30000) + 5000,
-  };
-}).reverse();
-
-export function FCRHistoryChart() {
+export function FCRHistoryChart({ 
+  data = [] 
+}: FCRHistoryChartProps) {
   const total = React.useMemo(
     () => ({
-      received: fcrData.reduce((acc, curr) => acc + curr.received, 0),
-      sent: fcrData.reduce((acc, curr) => acc + curr.sent, 0),
+      received: data.reduce((acc, curr) => acc + curr.received, 0),
+      sent: data.reduce((acc, curr) => acc + curr.sent, 0),
     }),
-    []
+    [data]
   );
 
   return (
@@ -57,7 +49,7 @@ export function FCRHistoryChart() {
       <div className="p-2">
         <div className="h-[120px] w-full">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={fcrData} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
+            <BarChart data={data} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
               <CartesianGrid vertical={false} stroke="#333" strokeOpacity={0.1} />
               <XAxis
                 dataKey="month"

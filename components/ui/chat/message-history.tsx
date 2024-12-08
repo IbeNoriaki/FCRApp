@@ -13,9 +13,10 @@ interface MessageHistoryProps {
 interface ChatMessage {
   id: string;
   sender: {
+    id?: string;
     name: string;
     image: string;
-    isProfile?: boolean
+    isProfile?: boolean;
   };
   message: string;
   fcr: number;
@@ -38,7 +39,7 @@ const allMessages: ChatMessage[] = [
   {
     id: "1",
     sender: {
-      name: "ファン",
+      name: "ファン1",
       image: "/avatars/user-01.png",
       isProfile: false
     },
@@ -155,7 +156,7 @@ export function MessageHistory({ className }: MessageHistoryProps) {
         </button>
       </div>
 
-      {/* メッセージ一覧 */}
+      {/* メ���セージ一覧 */}
       <div className="flex-1 space-y-6 overflow-y-auto p-4 pt-16">
         {!showPersonal && (
           <motion.div
@@ -175,7 +176,7 @@ export function MessageHistory({ className }: MessageHistoryProps) {
               "bg-gradient-to-r from-red-50 to-transparent dark:from-red-950/10 dark:to-transparent",
               "rounded-lg p-4"
             )}>
-              {/* アバ���ー */}
+              {/* アバター */}
               <div className="flex-shrink-0">
                 <div className="h-10 w-10 rounded-full overflow-hidden ring-2 ring-red-500">
                   <Image

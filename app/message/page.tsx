@@ -2,13 +2,11 @@
 
 import FlickeringGrid from "@/components/ui/flickering-grid";
 import { Header } from "@/components/ui/header";
-import { useRouter } from "next/navigation";
 import { AnimatedShinyTextDemo } from "@/components/ui/animated-shiny-text";
 import { ProfileGrid } from "@/components/ui/profile/profile-grid";
 import { MessageHistory } from "@/components/ui/chat/message-history";
 
 export default function MessagePage() {
-  const router = useRouter();
   const path = "fcr.ryukyu / username / message";
 
   return (
