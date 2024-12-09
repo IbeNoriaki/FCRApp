@@ -7,6 +7,7 @@ import { FCRTopDonorsGrid } from "@/components/ui/fcr-top-donors-grid";
 import { AnimatedShinyTextDemo } from "@/components/ui/animated-shiny-text";
 import { ProfileGrid } from "@/components/ui/profile/profile-grid";
 import { FCRHistoryChart } from "@/components/ui/profile/fcr-history-chart";
+import { SupporterList } from "@/components/ui/supporter-list";
 
 export default function ProfilePage() {
   const chartData = [
@@ -23,7 +24,7 @@ export default function ProfilePage() {
     // ... more data
   ];
 
-  const username = "YourUsername";
+  const path = "fcr.ryukyu / username";
 
   return (
     <>
@@ -42,7 +43,7 @@ export default function ProfilePage() {
         <div className="relative z-10 flex min-h-screen flex-col">
           <div className="w-full px-4 md:px-6 lg:px-8">
             <div className="h-12 flex items-center">
-              <AnimatedShinyTextDemo text={username} />
+              <AnimatedShinyTextDemo text={path} />
             </div>
           </div>
 
@@ -60,6 +61,10 @@ export default function ProfilePage() {
 
           <div className="w-full mt-4 px-4 md:px-6 lg:px-8">
             <FCRTopDonorsGrid className="w-full" />
+          </div>
+
+          <div className="w-full mt-4 px-4 md:px-6 lg:px-8">
+            <SupporterList />
           </div>
         </div>
       </main>

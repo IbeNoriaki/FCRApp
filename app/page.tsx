@@ -6,8 +6,12 @@ import { Header } from "@/components/ui/header";
 import { StatsGrid } from "@/components/ui/dashboard/stats-grid";
 import { FCRMessageList } from "@/components/ui/fcr-message-list";
 import { FCRTopDonorsGrid } from "@/components/ui/fcr-top-donors-grid";
+import { AnimatedShinyTextDemo } from "@/components/ui/animated-shiny-text";
+import { SupporterList } from "@/components/ui/supporter-list";
 
 export default function Home() {
+  const path = "fcr.ryukyu";
+
   return (
     <>
       <Header />
@@ -22,7 +26,13 @@ export default function Home() {
           />
         </div>
         
-        <div className="relative z-10 flex min-h-screen flex-col pt-16">
+        <div className="relative z-10 flex min-h-screen flex-col pt-12">
+          <div className="w-full px-4 md:px-6 lg:px-8">
+            <div className="h-12 flex items-center">
+              <AnimatedShinyTextDemo text={path} />
+            </div>
+          </div>
+
           <div className="w-full px-4 md:px-6 lg:px-8">
             <StatsGrid />
           </div>
@@ -37,6 +47,10 @@ export default function Home() {
 
           <div className="w-full mt-4 px-4 md:px-6 lg:px-8">
             <FCRTopDonorsGrid className="w-full" />
+          </div>
+
+          <div className="w-full mt-4 px-4 md:px-6 lg:px-8">
+            <SupporterList />
           </div>
         </div>
       </main>
