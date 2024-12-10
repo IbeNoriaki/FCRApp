@@ -5,6 +5,7 @@ import { Header } from "@/components/ui/header";
 import { AnimatedShinyTextDemo } from "@/components/ui/animated-shiny-text";
 import { ProfileGrid } from "@/components/ui/profile/profile-grid";
 import { MessageHistory } from "@/components/ui/chat/message-history";
+import { MessageInput } from "@/components/ui/chat/message-input";
 
 export default function MessagePage() {
   const path = "fcr.ryukyu / username / message";
@@ -12,7 +13,7 @@ export default function MessagePage() {
   return (
     <>
       <Header />
-      <main className="relative min-h-screen pt-12">
+      <main className="relative min-h-screen pt-12 pb-20">
         <div className="fixed inset-0 z-0">
           <FlickeringGrid 
             squareSize={4}
@@ -39,6 +40,7 @@ export default function MessagePage() {
           </div>
         </div>
       </main>
+      <MessageInput />
     </>
   );
 }

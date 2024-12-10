@@ -8,6 +8,7 @@ import { AnimatedShinyTextDemo } from "@/components/ui/animated-shiny-text";
 import { ProfileGrid } from "@/components/ui/profile/profile-grid";
 import { FCRHistoryChart } from "@/components/ui/profile/fcr-history-chart";
 import { SupporterList } from "@/components/ui/supporter-list";
+import { MessageInput } from "@/components/ui/chat/message-input";
 
 export default function ProfilePage() {
   const chartData = [
@@ -29,7 +30,7 @@ export default function ProfilePage() {
   return (
     <>
       <Header />
-      <main className="relative min-h-screen pt-12">
+      <main className="relative min-h-screen pt-12 pb-20">
         <div className="fixed inset-0 z-0">
           <FlickeringGrid 
             squareSize={4}
@@ -68,6 +69,7 @@ export default function ProfilePage() {
           </div>
         </div>
       </main>
+      <MessageInput />
     </>
   );
 } 
